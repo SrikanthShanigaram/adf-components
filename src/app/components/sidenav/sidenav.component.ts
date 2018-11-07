@@ -31,8 +31,10 @@ import { AppStore } from '../../store/states';
 import { currentFolder } from '../../store/selectors/app.selectors';
 import { takeUntil } from 'rxjs/operators';
 import { ContentActionRef, NavBarGroupRef } from '@alfresco/adf-extensions';
+import { FilesComponent } from '../files/files.component';
 
 @Component({
+    providers: [ FilesComponent ],
     selector: 'app-sidenav',
     templateUrl: './sidenav.component.html',
     styleUrls: ['./sidenav.component.scss']
@@ -46,7 +48,8 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
     constructor(
         private store: Store<AppStore>,
-        private extensions: AppExtensionService
+        private extensions: AppExtensionService,
+        private filesComponent: FilesComponent
     ) {}
 
     ngOnInit() {
@@ -67,5 +70,10 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
     trackById(index: number, obj: { id: string }) {
         return obj.id;
+    }
+
+    onNodeSelect(node: any){
+        console.log(event,'event');
+        this.filesComponent.navigate(node);
     }
 }

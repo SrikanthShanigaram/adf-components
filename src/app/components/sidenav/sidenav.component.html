@@ -1,5 +1,22 @@
 <div class="sidenav">
-    <div class="sidenav__section sidenav__section sidenav_action-menu">
+    <adf-document-list
+    #documentList
+    [currentFolderId]="'-my-'"
+    [contextMenuActions]="true"
+    [contentActions]="false"
+    [showHeader]= false
+    [navigate]= false
+    (node-select)="onNodeSelect($event.detail?.node)"
+    >
+    <data-columns>
+    <data-column
+    key="name"
+    sortable="false"
+    >
+</data-column>
+</data-columns>
+    </adf-document-list>
+    <!-- <div class="sidenav__section sidenav__section sidenav_action-menu">
         <adf-sidebar-action-menu
             [expanded]="showLabel"
             [attr.title]="'APP.NEW_MENU.TOOLTIP' | translate"
@@ -51,5 +68,5 @@
                     }">{{ item.title | translate }}</span>
             </li>
         </ul>
-    </div>
+    </div> -->
 </div>

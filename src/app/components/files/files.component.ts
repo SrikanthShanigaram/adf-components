@@ -115,6 +115,7 @@ export class FilesComponent extends PageComponent implements OnInit, OnDestroy {
     }
 
     navigate(nodeId: string = null) {
+        console.log("sdfjskjdfs",nodeId);
         const commands = [ './' ];
 
         if (nodeId && !this.isRootNode(nodeId)) {
