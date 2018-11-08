@@ -115,12 +115,16 @@ export class FilesComponent extends PageComponent implements OnInit, OnDestroy {
     }
 
     navigate(nodeId: string = null) {
-        console.log("sdfjskjdfs",nodeId);
         const commands = [ './' ];
+        let isPersonalFile: Boolean = this.router.url.startsWith('/personal-files');
+        console.log(this.router.url+" kkk");
+
+        console.log(isPersonalFile," commands");
 
         if (nodeId && !this.isRootNode(nodeId)) {
             commands.push(nodeId);
         }
+        console.log(this.route.parent+"this.route.parent");
 
         this.router.navigate(commands, {
             relativeTo: this.route.parent
@@ -130,7 +134,6 @@ export class FilesComponent extends PageComponent implements OnInit, OnDestroy {
     navigateTo(node: MinimalNodeEntity) {
         if (node && node.entry) {
             const { id, isFolder } = node.entry;
-
             if (isFolder) {
                 this.navigate(id);
                 return;

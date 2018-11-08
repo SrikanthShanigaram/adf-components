@@ -74,6 +74,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
     onNodeSelect(node: any){
         console.log(event,'event');
-        this.filesComponent.navigate(node);
+        this.filesComponent.navigateTo(node);
     }
 }
