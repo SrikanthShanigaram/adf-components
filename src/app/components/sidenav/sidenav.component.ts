@@ -23,57 +23,74 @@
  * along with Alfresco. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Subject } from 'rxjs';
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  OnInit,
+  ViewEncapsulation,
+  OnDestroy,
+  EventEmitter
+} from '@angular/core';
 import { AppExtensionService } from '../../extensions/extension.service';
+import { NavBarGroupRef } from '@alfresco/adf-extensions';
 import { Store } from '@ngrx/store';
 import { AppStore } from '../../store/states';
-import { currentFolder } from '../../store/selectors/app.selectors';
-import { takeUntil } from 'rxjs/operators';
-import { ContentActionRef, NavBarGroupRef } from '@alfresco/adf-extensions';
-import { FilesComponent } from '../files/files.component';
+import { ruleContext } from '../../store/selectors/app.selectors';
+import { Subject } from 'rxjs';
+import { takeUntil, distinctUntilChanged, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
-    providers: [ FilesComponent ],
-    selector: 'app-sidenav',
-    templateUrl: './sidenav.component.html',
-    styleUrls: ['./sidenav.component.scss']
+  selector: 'app-sidenav',
+  templateUrl: './sidenav.component.html',
+  styleUrls: ['./sidenav.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  host: { class: 'app-sidenav' }
 })
 export class SidenavComponent implements OnInit, OnDestroy {
-    @Input() showLabel: boolean;
+  private onDestroy$: Subject<boolean> = new Subject<boolean>();
+  @Output() onLeftNavNodeSelected: EventEmitter<any> = new EventEmitter<any>();
 
-    groups: Array<NavBarGroupRef> = [];
-    createActions: Array<ContentActionRef> = [];
-    onDestroy$: Subject<boolean> = new Subject<boolean>();
+  @Input()
+  showLabel: boolean;
 
-    constructor(
-        private store: Store<AppStore>,
-        private extensions: AppExtensionService,
-        private filesComponent: FilesComponent
-    ) {}
+  groups: Array<NavBarGroupRef> = [];
 
-    ngOnInit() {
-        this.groups = this.extensions.getNavigationGroups();
+  constructor(
+    private router: Router,
+    private store: Store<AppStore>,
+    private extensions: AppExtensionService,
+  ) {}
 
-        this.store
-            .select(currentFolder)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => {
-                this.createActions = this.extensions.getCreateActions();
-            });
-    }
+  ngOnInit() {
+    this.store
+      .select(ruleContext)
+      .pipe(
+        map(rules => rules.repository),
+        distinctUntilChanged(),
+        takeUntil(this.onDestroy$)
+      )
+      .subscribe(() => {
+        this.groups = this.extensions.getApplicationNavigation(
+          this.extensions.navbar
+        );
+      });
+  }
 
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
+  trackById(index: number, obj: { id: string }) {
+    return obj.id;
+  }
 
-    trackById(index: number, obj: { id: string }) {
-        return obj.id;
-    }
+  ngOnDestroy() {
+    this.onDestroy$.next(true);
+    this.onDestroy$.complete();
+  }
 
-    onNodeSelect(node: any){
-        console.log(event,'event');
-        this.filesComponent.navigateTo(node);
-    }
+  onNodeSelect(node: any): void{
+    this.onLeftNavNodeSelected.emit(true);
+    this.router.navigate(['/personal-files', node.entry.id], {
+      replaceUrl: true
+    });
+  }
 }
