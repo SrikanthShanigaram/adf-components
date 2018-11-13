@@ -1,60 +1,73 @@
 <h2 mat-dialog-title> <span class="app-upload-ui__text">{{ 'APP.NEW_MENU.MENU_ITEMS.UPLOAD_FILE' | translate }}</span></h2>
-<mat-dialog-content class="mat-typography upload-form">
-    <div>
-        <mat-form-field [hideRequiredMarker]="false" [floatLabel]="true">
-            <mat-select required ([ngModel])="currentYear">
-                <mat-option *ngFor="let year of fiscalYear"
-                [value]="year"
+<mat-dialog-content class="mat-typography">
+    <form #uploadForm="ngForm" class="upload-form">
+        <div>
+            <mat-form-field [hideRequiredMarker]="false" [floatLabel]="true">
+                <mat-select required [value]="currentYear"
+                name="fiscalYear"
                 >
-                {{year}}
-                </mat-option>
-            </mat-select>
-            <mat-label>
+                    <mat-option *ngFor="let year of fiscalYear" [value]="year">
+                        {{year}}
+                    </mat-option>
+                </mat-select>
+                <mat-label>
                     {{ 'BT.FISCAL_YEAR' | translate }}
-            </mat-label>
-        </mat-form-field>
-        <mat-form-field [hideRequiredMarker]="true" [floatLabel]="true">
-                <mat-select>
-                    <mat-option></mat-option>
-                    <mat-option *ngFor="let month of fiscalMonth"
-                    [value]="month"
-                    >
-                    {{month}}
-                    </mat-option>
-                </mat-select>
-                <mat-label>
-                        {{ 'BT.FISCAL_MONTH' | translate }}
                 </mat-label>
-        </mat-form-field>
-    </div>
-    <div>
-        <mat-form-field [hideRequiredMarker]="false" [floatLabel]="true">
-            <mat-select required>
-                <mat-option *ngFor="let originValue of origin"
-                [value]="originValue"
+            </mat-form-field>
+            <mat-form-field [hideRequiredMarker]="true" [floatLabel]="true">
+                <mat-select
+                ngModel
+                name="fiscalMonth"
                 >
-                {{originValue}}
-                </mat-option>
-            </mat-select>
-            <mat-label>
-                    {{ 'BT.ORIGIN' | translate }}
-            </mat-label>
-        </mat-form-field>
-        <mat-form-field [hideRequiredMarker]="false" [floatLabel]="true">
-                <mat-select required>
-                    <mat-option *ngFor="let serviceValue of service"
-                    [value]="serviceValue"
-                    >
-                    {{serviceValue}}
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let month of fiscalMonth" [value]="month">
+                        {{month}}
                     </mat-option>
                 </mat-select>
                 <mat-label>
-                        {{ 'BT.SERVICE' | translate }}
+                    {{ 'BT.FISCAL_MONTH' | translate }}
                 </mat-label>
-        </mat-form-field>
-    </div>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field [hideRequiredMarker]="false" [floatLabel]="true">
+                <mat-select required
+                ngModel
+                name="origin"
+                >
+                    <mat-option *ngFor="let originValue of origin" [value]="originValue">
+                        {{originValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-label>
+                    {{ 'BT.ORIGIN' | translate }}
+                </mat-label>
+            </mat-form-field>
+            <mat-form-field [hideRequiredMarker]="false" [floatLabel]="true">
+                <mat-select required
+                ngModel
+                name="service"
+                >
+                    <mat-option *ngFor="let serviceValue of service" [value]="serviceValue">
+                        {{serviceValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-label>
+                    {{ 'BT.SERVICE' | translate }}
+                </mat-label>
+            </mat-form-field>
+        </div>
+    </form>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
+<mat-dialog-actions align="start">
     <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+    <adf-upload-button 
+    [rootFolderId]="'cb8eb91a-90b9-40c2-9c16-d076c2e0bb58'"
+    [uploadFolders]="false"
+    [multipleFiles]="true"
+    [versioning]="false"
+    [disabled]="!uploadForm.valid"
+    (beginUpload)="onBeforeFileUpload($event)"
+    (success)="onFileUploaded($event)">
+    </adf-upload-button>
 </mat-dialog-actions>

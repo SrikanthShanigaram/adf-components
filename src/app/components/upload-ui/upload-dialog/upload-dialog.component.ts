@@ -1,5 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { UploadFilesEvent,ConfirmDialogComponent } from '@alfresco/adf-content-services';
+import { FileModel } from '@alfresco/adf-core';
+import { MatDialog } from '@angular/material';
 
 @Component({
     selector: 'app-upload-dialog',
@@ -9,7 +12,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class UploadDialogComponent implements OnInit{
 
     constructor(
-        public dialogRef: MatDialogRef<UploadDialogComponent>,
+        public dialogRef: MatDialogRef<UploadDialogComponent>,public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any) {}
     fiscalYear = [];
     fiscalMonth = [];
@@ -35,7 +38,43 @@ export class UploadDialogComponent implements OnInit{
         console.log(this.currentYear,"fiuscalyear")
     }
     
-      onNoClick(): void {
-        this.dialogRef.close();
-      }
+    onNoClick(): void {
+       this.dialogRef.close();
+    }
+    onFileUploaded(event: any) {
+        console.log(event,"event");
+    }
+    onBeforeFileUpload(event: UploadFilesEvent) {
+        event.pauseUpload();
+        const files = event.files || [];
+        console.log("Test :: ",files)
+        var fileIndex = 0
+        for(; fileIndex < files.length; fileIndex++){
+            var fileModel: FileModel = files[fileIndex];
+            console.log(fileIndex,fileModel);
+            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                data: {
+                    title: 'Upload',
+                    message: `Are you sure you want to upload ${files.length} file(s)?`
+                },
+                minWidth: '250px'
+            });
+
+            dialogRef.afterClosed().subscribe(result => {
+                if (result === true) {
+                    console.log("==",fileModel);
+                    if( fileModel.options == null ){
+                        fileModel.options = {}
+                    }
+                    if( fileModel.options.properties == null ){
+                        fileModel.options.properties = {}
+                    }
+                    // Getting Issue becuase og no qname with bt [No content Model]        
+                    fileModel.options.properties['bt:fiscalYear'] = 2018;
+                    console.log(fileIndex,fileModel);
+                    event.resumeUpload();
+                }
+            });           
+        }
+    }
 }
