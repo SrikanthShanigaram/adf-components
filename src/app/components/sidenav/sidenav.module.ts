@@ -30,6 +30,8 @@ import { SidenavComponent } from './sidenav.component';
 import { CoreModule } from '@alfresco/adf-core';
 import { RouterModule } from '@angular/router';
 import { ContentModule } from '@alfresco/adf-content-services';
+import { UploadUiComponent } from "../upload-ui/upload-ui.component";
+import { UploadDialogComponent } from '../upload-ui/upload-dialog/upload-dialog.component';
 
 @NgModule({
   imports: [
@@ -39,7 +41,8 @@ import { ContentModule } from '@alfresco/adf-content-services';
     AppCreateMenuModule,
     ContentModule
   ],
-  declarations: [SidenavComponent],
-  exports: [SidenavComponent]
+  declarations: [SidenavComponent,UploadUiComponent, UploadDialogComponent],
+  exports: [SidenavComponent],
+  entryComponents: [UploadDialogComponent]
 })
 export class AppSidenavModule {}

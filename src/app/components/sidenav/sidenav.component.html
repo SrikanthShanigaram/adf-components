@@ -1,4 +1,7 @@
 <div class="sidenav">
+        <div class="sidenav__section sidenav__section sidenav_action-menu">
+                <app-upload-ui [expanded]="showLabel"></app-upload-ui>
+        </div>
         <adf-document-list
         #documentList
         [currentFolderId]="'-my-'"
@@ -24,11 +27,11 @@
             </data-columns>
         </adf-document-list>
         
-   <!--  <div class="sidenav__section sidenav__section sidenav_action-menu">
+   <!-- <div class="sidenav__section sidenav__section sidenav_action-menu">
       <app-create-menu [expanded]="showLabel"></app-create-menu>
-    </div>
+    </div> -->
 
-    <div *ngFor="let group of groups; trackBy: trackById"
+   <!--   <div *ngFor="let group of groups; trackBy: trackById"
         class="sidenav__section sidenav__section--menu" >
         <ul class="sidenav-menu">
             <li *ngFor="let item of group.items; trackBy: trackById"

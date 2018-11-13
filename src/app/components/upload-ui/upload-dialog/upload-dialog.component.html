@@ -1,0 +1,60 @@
+<h2 mat-dialog-title> <span class="app-upload-ui__text">{{ 'APP.NEW_MENU.MENU_ITEMS.UPLOAD_FILE' | translate }}</span></h2>
+<mat-dialog-content class="mat-typography upload-form">
+    <div>
+        <mat-form-field [hideRequiredMarker]="false" [floatLabel]="true">
+            <mat-select required ([ngModel])="currentYear">
+                <mat-option *ngFor="let year of fiscalYear"
+                [value]="year"
+                >
+                {{year}}
+                </mat-option>
+            </mat-select>
+            <mat-label>
+                    {{ 'BT.FISCAL_YEAR' | translate }}
+            </mat-label>
+        </mat-form-field>
+        <mat-form-field [hideRequiredMarker]="true" [floatLabel]="true">
+                <mat-select>
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let month of fiscalMonth"
+                    [value]="month"
+                    >
+                    {{month}}
+                    </mat-option>
+                </mat-select>
+                <mat-label>
+                        {{ 'BT.FISCAL_MONTH' | translate }}
+                </mat-label>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field [hideRequiredMarker]="false" [floatLabel]="true">
+            <mat-select required>
+                <mat-option *ngFor="let originValue of origin"
+                [value]="originValue"
+                >
+                {{originValue}}
+                </mat-option>
+            </mat-select>
+            <mat-label>
+                    {{ 'BT.ORIGIN' | translate }}
+            </mat-label>
+        </mat-form-field>
+        <mat-form-field [hideRequiredMarker]="false" [floatLabel]="true">
+                <mat-select required>
+                    <mat-option *ngFor="let serviceValue of service"
+                    [value]="serviceValue"
+                    >
+                    {{serviceValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-label>
+                        {{ 'BT.SERVICE' | translate }}
+                </mat-label>
+        </mat-form-field>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+</mat-dialog-actions>

@@ -1,0 +1,22 @@
+<ng-container *ngIf="expanded">
+    <button
+        data-automation-id="create-button"
+        mat-raised-button
+        title="{{ 'APP.NEW_MENU.MENU_ITEMS.UPLOAD_FILE' | translate }}"
+        (click)="openUploadDialog()"
+        >
+        <mat-icon title="{{ 'APP.NEW_MENU.MENU_ITEMS.UPLOAD_FILE' | translate }}">cloud_upload</mat-icon>
+        <span class="app-upload-ui__text">{{ 'APP.NEW_MENU.MENU_ITEMS.UPLOAD_FILE' | translate }}</span>
+    </button>
+</ng-container>
+      
+<ng-container *ngIf="!expanded">
+    <button
+        class="app-upload-ui-collapsed"
+        data-automation-id="create-button"
+        title="{{ 'APP.NEW_MENU.MENU_ITEMS.UPLOAD_FILE' | translate }}"
+        (click)="openUploadDialog()"
+        >
+        <mat-icon title="{{ 'APP.NEW_MENU.MENU_ITEMS.UPLOAD_FILE' | translate }}">cloud_upload</mat-icon>
+    </button>
+</ng-container>
