@@ -147,15 +147,6 @@ export class AppExtensionService implements RuleContext {
       "desktopOnly": true
     },
     {
-      "id": "bt.id.fiscalMonth",
-      "key": "properties.bt:fiscalMonth",
-      "title": "BT.FISCAL_MONTH",
-      "type": "text",
-      "class": "adf-data-table-cell--ellipsis",
-      "sortable": true,
-      "desktopOnly": true
-    },
-    {
       "id": "bt.id.origin",
       "key": "properties.bt:origin",
       "title": "BT.ORIGIN",

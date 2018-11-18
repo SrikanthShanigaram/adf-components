@@ -28,7 +28,7 @@
                     acaDocumentList
                     acaContextActions
                     [display]="documentDisplayMode$ | async"
-                    [sorting]="[ 'modifiedAt', 'desc' ]"
+                    [sorting]="[ 'createdAt', 'desc' ]"
                     selectionMode="multiple"
                     [currentFolderId]="node?.id"
                     [allowDropFiles]="true"
@@ -36,7 +36,12 @@
                     [imageResolver]="imageResolver"
                     (node-dblclick)="navigateTo($event.detail?.node)"
                     (name-click)="navigateTo($event.detail?.node)">
-
+                    <empty-folder-content>
+                        <ng-template>
+                            <h1 style="text-align: center">{{ "BT.NO_DOCUMENTS" | translate}}</h1>
+                            <img class="adf-empty-folder-image" src="./assets/images/empty_doc_lib.svg">
+                        </ng-template>
+                    </empty-folder-content>
                     <data-columns>
                       <ng-container *ngFor="let column of columns; trackBy: trackById">
 

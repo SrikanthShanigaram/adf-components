@@ -19,7 +19,7 @@ export class UploadUiComponent {
     openUploadDialog(): void{
         const dialogRef = this.dialog.open(UploadDialogComponent, {
             width: '500px',
-            data: {name: 'test', animal: 'test1'}
+            data: {}
           });
       
           dialogRef.afterClosed().subscribe(result => {

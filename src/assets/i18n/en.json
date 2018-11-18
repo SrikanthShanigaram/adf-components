@@ -353,6 +353,8 @@
         "FISCAL_YEAR": "Fiscal Year",
         "FISCAL_MONTH": "Fiscal Month",
         "ORIGIN": "Origin",
-        "SERVICE": "Service"
+        "SERVICE": "Service",
+        "NO_DOCUMENTS": "Sorry, no content here",
+        "UPLOAD_FILES" : "Drag and Drop OR choose files to upload"
     }
 }
